@@ -17,6 +17,7 @@ PRODUCT_COPY_FILES := \
     system/bluetooth/data/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
     device/t2m/flame/fstab.qcom:root/fstab.qcom \
     device/t2m/flame/init.target.rc:root/init.target.rc \
+    device/t2m/flame/tor/torrc:system/etc/torrc
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic.mk)
 $(call inherit-product-if-exists, vendor/t2m/flame/flame-vendor-blobs.mk)
@@ -31,10 +32,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.moz.ril.numclients=2 \
   ro.moz.ril.subscription_control=true \
   org.bluez.device.conn.type=array \
+  extensions.torlauncher.control_host=127.0.0.1 \
+  extensions.torlauncher.control_port=9151 \
+  extensions.torlauncher.loglevel=4 \
+  extensions.torlauncher.logmethod=1 \
+  extensions.torlauncher.max_tor_log_entries=1000 \
+  extensions.torlauncher.prompt_at_startup=false \
+  extensions.torlauncher.start_tor=false \
+  extensions.torlauncher.tor_path=/system/bin/tor \
+  extensions.torlauncher.tordatadir_path=/data/tor \
+  extensions.torlauncher.torrc_path=/etc/torrc
 
 PRODUCT_PACKAGES += \
   nfcd \
-  librecovery
+  librecovery \
+  tor
 
 GAIA_DEV_PIXELS_PER_PX := 1.5
 
